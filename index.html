@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini API Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Gemini API Text & Image Upload</h1>
+
+    <label for="prompt">Enter your prompt:</label>
+    <textarea id="prompt" rows="4" placeholder="Type something like 'Explain how AI works'"></textarea>
+
+    <label for="imageUpload">Upload an image:</label>
+    <input type="file" id="imageUpload" accept="image/*">
+
+    <!-- Send Request Button -->
+    <button id="sendButton" class="send">
+        <span class="circle" aria-hidden="true">
+            <span class="icon arrow"></span>
+        </span>
+        <span class="button-text">Analyze</span>
+    </button>
+
+    <div id="response">
+        <h3>Response:</h3>
+        <p id="responseText">Waiting for response...</p>
+    </div>
+
+    <div id="imagePreviewContainer">
+        <!-- Image Preview will appear here -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
