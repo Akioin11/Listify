@@ -1956,6 +1956,7 @@ input, select, textarea {
 		input[type="button"].primary,
 		button.primary,
 		.button.primary {
+			margin-top: 3rem;
 			background-color: #a0856c;
 			box-shadow: none;
 			color: #000000 !important;

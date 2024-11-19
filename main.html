@@ -20,8 +20,8 @@
 							<h1>Listify</h1>
 							<p>From picture to product—automate your Amazon listings with ease.</p>
 							<ul class="actions">
-                                <li><a href="#first1" class="button primary">Get Started</a></li>
-                                <li><a href="#first" class="arrow scrolly"><span class="label">Next</span></a></li>
+                                <!--<li><a href="main.html#first1" class="button primary">Get Started</a></li>-->
+                                <li><a href="#first1" class="arrow scrolly"><span class="label">Next</span></a></li>
 							</ul>
 						</header>
 						<div class="content">
@@ -43,30 +43,54 @@
                                             <thead>
                                                 <tr>
                                                     <th>File</th>
-                                                    <th>Action</th>
-                                                </tr>
+                                                    </tr>
                                             </thead>
                                             <tbody id="fileTableBody">
                                                 <tr>
                                                     <td><input type="file" name="file" required /></td>
-                                                    <td><button type="button" class="removeFileButton">Remove</button></td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                     <button type="button" id="addFileButton">Add Another File</button>
+                                    <button type="button" id="removeFileButton">Remove Last File</button>
                                     <br />
-                                    <!-- <textarea id="promptInput" name="prompt" placeholder="Enter your prompt here..." required></textarea>-->
-                                    <br />
-                                    <button type="submit">Upload and Process</button>
+                                    <button class="button primary" type="submit">Upload and Process</button>
                                 </form>
                                 <p id="output"></p>
                             </body>
 						</div>
 					</section>
 
+                    <!-- Section1 -->
+					<section id="second">
+						<header>
+            		<h2>Process and Preview.</h2>
+                    <div id="productTableWrapper" style="display: none;">
+                        <h4>Product Information</h4>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Color</th>
+                                        <th>Type</th>
+                                        <th>Keywords</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productTableBody">
+                                    <!-- AI response will populate here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                        
+					</section>
+
 				<!-- Copyright -->
-					<div class="copyright">&copy; Untitled. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</div>
+                <div class="copyright">&copy;<a href="https://www.linkedin.com/in/shakshat/" target="_blank"> Sharma, Akshat </a>.</div>
 
 			</div>
 
