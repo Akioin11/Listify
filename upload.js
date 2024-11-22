@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const fileTableBody = document.getElementById("fileTableBody");
     const uploadForm = document.getElementById("uploadForm");
 
-    //const fixedPrompt = `List a few popular cookie recipes in JSON format.
+//const fixedPrompt = `List a few popular cookie recipes in JSON format.
 //Use this JSON schema:
 //Recipe = {'recipe_name': str, 'ingredients': list[str]}
 //Return: list[Recipe]`
+//Fixed prompt for AI response
 
- //Fixed prompt for AI response
     const fixedPrompt = `Only give the required fields, no explanations or disclaimers, those are already provided on the front end. Be concise.
         Material: The fabric/material of the clothing. All in JSON format.
         Use this JSON schema:
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Use this response scheme:
         details = (title': str, 'price': str, 'color': str, 'type': str, 'keywords': list[str])`;
 
-    // Add file input fields dynamically when the "Add Another File" button is clicked
+    //Add File
     addFileButton.addEventListener('click', function () {
         const row = document.createElement("tr");
 
