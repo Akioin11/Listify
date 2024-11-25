@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //Fixed prompt for AI response
 
     const fixedPrompt = `Only give the required fields, no explanations or disclaimers, those are already provided on the front end. Be concise.
-        Material: The fabric/material of the clothing. All in JSON format.
+        Material: The fabric/material of the clothing. Include more details in title and include more keywords. All in JSON format.
         Use this JSON schema:
         Price (in rs): Estimated price in INR.
         Amazon listing title: A short title for the product.
@@ -79,54 +79,75 @@ document.addEventListener('DOMContentLoaded', function () {
             }
     
             const result = await response.json();
-    
-            console.log(result); // Log the entire result for debugging
+            console.log("Server response:", result); // Log the entire result
     
             if (result && result.ai_response) {
                 let aiResponse = result.ai_response;
+                console.log("Raw AI response:", aiResponse);
     
-                console.log(aiResponse); // Log the raw AI response
+                // Step 1: Remove Markdown-style code fences and clean up the response
+                const cleanedResponse = aiResponse.replace(/```json|```/g, '').trim();
+                console.log("Cleaned AI response:", cleanedResponse);
     
-                // Step 1: Remove Markdown-style code fences
-                aiResponse = aiResponse.replace(/```json|```/g, '').trim();
-    
-                // Step 2: Parse the cleaned JSON
+                // Step 2: Attempt to parse the JSON
+                let parsedResponse;
                 try {
-                    const recipes = JSON.parse(aiResponse); // Parse JSON string to an array
-    
-                    console.log("Processed recipes:", recipes);
-    
-                    // Create table rows dynamically from parsed recipes
-                    const tableBody = document.getElementById("productTableBody");
-                    tableBody.innerHTML = ''; // Clear previous table content
-    
-                    recipes.forEach((recipe) => {
-                        const row = document.createElement("tr");
-    
-                        // Add recipe name
-                        const nameCell = document.createElement("td");
-                        nameCell.innerText = recipe.recipe_name;
-                        row.appendChild(nameCell);
-    
-                        // Add ingredients
-                        const ingredientsCell = document.createElement("td");
-                        ingredientsCell.innerText = recipe.ingredients.join(", ");
-                        row.appendChild(ingredientsCell);
-    
-                        // Append the row to the table
-                        tableBody.appendChild(row);
-                    });
-    
-                    // Show the table in the UI
-                    document.getElementById("productTableWrapper").style.display = "block";
-    
-                } catch (e) {
-                    console.error("Error parsing AI response:", e);
-                    document.getElementById("output").innerText = `Error parsing response: ${e.message}`;
+                    parsedResponse = JSON.parse(cleanedResponse);
+                    console.log("Parsed response:", parsedResponse);
+                } catch (parseError) {
+                    throw new Error(`Failed to parse JSON: ${parseError.message}`);
                 }
     
+                // Step 3: Normalize response to array if it's not already
+                const detailsArray = Array.isArray(parsedResponse) ? parsedResponse : [parsedResponse];
+                console.log("Normalized details array:", detailsArray);
+    
+                // Step 4: Populate the table
+                const tableBody = document.getElementById("productTableBody");
+                tableBody.innerHTML = ''; // Clear previous table content
+    
+                detailsArray.forEach((details, index) => {
+                    if (typeof details !== "object" || details === null) {
+                        console.warn(`Invalid entry at index ${index}:`, details);
+                        return;
+                    }
+    
+                    const row = document.createElement("tr");
+    
+                    // Add title
+                    const titleCell = document.createElement("td");
+                    titleCell.innerText = details.title || "N/A";
+                    row.appendChild(titleCell);
+    
+                    // Add price
+                    const priceCell = document.createElement("td");
+                    priceCell.innerText = details.price || "N/A";
+                    row.appendChild(priceCell);
+    
+                    // Add color
+                    const colorCell = document.createElement("td");
+                    colorCell.innerText = details.color || "N/A";
+                    row.appendChild(colorCell);
+    
+                    // Add type
+                    const typeCell = document.createElement("td");
+                    typeCell.innerText = details.type || "N/A";
+                    row.appendChild(typeCell);
+    
+                    // Add keywords
+                    const keywordsCell = document.createElement("td");
+                    keywordsCell.innerText = details.keywords ? details.keywords.join(", ") : "N/A";
+                    row.appendChild(keywordsCell);
+    
+                    // Append the row to the table
+                    tableBody.appendChild(row);
+                });
+    
+                // Show the table in the UI
+                document.getElementById("productTableWrapper").style.display = "block";
+    
             } else {
-                console.log("AI response is not available.");
+                console.warn("AI response is not available.");
                 document.getElementById("output").innerText = "AI response not available.";
             }
         } catch (error) {
@@ -134,7 +155,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("output").innerText = `Error: ${error.message}`;
         }
     }
-    
     
 
     // Bind the submit event to the form
